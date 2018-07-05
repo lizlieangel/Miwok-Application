@@ -14,8 +14,11 @@ import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
 
-    public WordAdapter(Context context, ArrayList<Word> words) {
-        super(context,0,words);
+    private int colorResource;
+
+    public WordAdapter(Context context, ArrayList<Word> words, int color) {
+       super(context,0,words);
+       this.colorResource = color;
     }
 
     @Override
@@ -41,6 +44,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
         else {
             imageView.setVisibility(View.GONE);
         }
+
+        View textContainer = listItemView.findViewById(R.id.text_container);
+        textContainer.setBackgroundColor(colorResource);
         return  listItemView;
     }
 }
