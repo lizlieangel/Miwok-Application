@@ -4,6 +4,8 @@ public class Word {
     private String miwokWord;
     private String defaultWord;
     private int imageId;
+//    private int imageId = NO_IMAGE_PROVIDED;
+//    private static final int NO_IMAGE_PROVIDED = -1;
 
     public Word(String dMiwok, String dWord) {
         this.miwokWord = dMiwok;
@@ -39,4 +41,8 @@ public class Word {
     public void setImageId(int image) {
         this.imageId = image;
     }
+
+//    public boolean hasImage() {
+//        return imageId != NO_IMAGE_PROVIDED; //true
+//    }
 }
