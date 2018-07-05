@@ -3,9 +3,8 @@ package com.example.lizlieholleza.miwok;
 public class Word {
     private String miwokWord;
     private String defaultWord;
-    private int imageId;
-//    private int imageId = NO_IMAGE_PROVIDED;
-//    private static final int NO_IMAGE_PROVIDED = -1;
+    private int imageId = NO_IMAGE_PROVIDED;
+    private static final int NO_IMAGE_PROVIDED = -1;
 
     public Word(String dMiwok, String dWord) {
         this.miwokWord = dMiwok;
@@ -42,7 +41,7 @@ public class Word {
         this.imageId = image;
     }
 
-//    public boolean hasImage() {
-//        return imageId != NO_IMAGE_PROVIDED; //true
-//    }
+    public boolean hasImage() {
+        return imageId != NO_IMAGE_PROVIDED; //true
+    }
 }
