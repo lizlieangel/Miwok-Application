@@ -13,6 +13,13 @@ import java.util.List;
 public class ColorsActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
 
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,7 @@ public class ColorsActivity extends AppCompatActivity {
         colorList.add(new Word("chiwiiṭә","mustard yellow", R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
 
         WordAdapter adapter = new WordAdapter(this, colorList, R.color.category_colors);
+        releaseMediaPlayer();
         ListView lv = (ListView) findViewById(R.id.list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -40,5 +48,12 @@ public class ColorsActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         });
+    }
+
+    private void releaseMediaPlayer() {
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
