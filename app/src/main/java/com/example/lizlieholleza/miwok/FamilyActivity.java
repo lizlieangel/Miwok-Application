@@ -12,6 +12,13 @@ import java.util.ArrayList;
 public class    FamilyActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
 
+    private MediaPlayer.OnCompletionListener mCompletionListner = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMediaPlayer();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +44,16 @@ public class    FamilyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word word = familyList.get(position);
+                releaseMediaPlayer();
                 mediaPlayer = MediaPlayer.create(FamilyActivity.this, word.getSoundId());
                 mediaPlayer.start();
             }
         });
+    }
+    private void releaseMediaPlayer() {
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }
