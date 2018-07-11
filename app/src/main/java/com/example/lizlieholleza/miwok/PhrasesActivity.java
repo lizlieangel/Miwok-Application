@@ -28,7 +28,7 @@ public class PhrasesActivity extends AppCompatActivity {
             }
         }
     };
-    private MediaPlayer.OnCompletionListener mCompletionListner = new MediaPlayer.OnCompletionListener(){
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener(){
         @Override
         public void onCompletion(MediaPlayer mp) {
             releaseMediaPlayer();
@@ -66,7 +66,7 @@ public class PhrasesActivity extends AppCompatActivity {
                 if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mediaPlayer = MediaPlayer.create(PhrasesActivity.this, word.getSoundId());
                     mediaPlayer.start();
-                    mediaPlayer.setOnCompletionListener(mCompletionListner);
+                    mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
             }
         });

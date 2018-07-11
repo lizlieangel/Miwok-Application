@@ -1,6 +1,9 @@
 package com.example.lizlieholleza.miwok;
 
+import android.content.Context;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,11 +15,24 @@ import java.util.List;
 
 public class ColorsActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
-
+    private AudioManager audioManager;
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
             releaseMediaPlayer();
+        }
+    };
+    private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
+                mediaPlayer.pause();
+                mediaPlayer.seekTo(0);
+            } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
+                mediaPlayer.start();
+            } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                releaseMediaPlayer();
+            }
         }
     };
 
@@ -45,8 +61,12 @@ public class ColorsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word word = colorList.get(position);
                 releaseMediaPlayer();
-                mediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getSoundId());
-                mediaPlayer.start();
+                int result = audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                if(result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+                    mediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getSoundId());
+                    mediaPlayer.start();
+                    mediaPlayer.setOnCompletionListener(mCompletionListener);
+                }
             }
         });
     }
@@ -55,6 +75,7 @@ public class ColorsActivity extends AppCompatActivity {
         if(mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
+            audioManager.abandonAudioFocus(audioFocusChangeListener);
         }
     }
 
