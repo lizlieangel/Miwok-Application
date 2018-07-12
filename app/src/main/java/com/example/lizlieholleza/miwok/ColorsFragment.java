@@ -65,7 +65,7 @@ public class ColorsFragment extends Fragment {
 
         WordAdapter adapter = new WordAdapter(getActivity(), colorList, R.color.category_colors);
         releaseMediaPlayer();
-        ListView lv = (ListView) getActivity().findViewById(R.id.list);
+        ListView lv = (ListView) rootview.findViewById(R.id.list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
