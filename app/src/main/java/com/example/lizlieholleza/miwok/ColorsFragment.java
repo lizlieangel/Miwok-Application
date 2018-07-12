@@ -90,4 +90,10 @@ public class ColorsFragment extends Fragment {
             audioManager.abandonAudioFocus(mAudioFocusChangeListener);
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        releaseMediaPlayer();
+    }
 }
