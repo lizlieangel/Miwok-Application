@@ -51,7 +51,7 @@ public class ColorsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
       View rootview = inflater.inflate(R.layout.word_list, container, false);
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         final ArrayList<Word> colorList = new ArrayList<Word>();
 
         colorList.add(new Word("weṭeṭṭi","red", R.drawable.color_red, R.raw.color_red));
@@ -63,9 +63,9 @@ public class ColorsFragment extends Fragment {
         colorList.add(new Word("ṭopiisә","dusty yellow", R.drawable.color_dusty_yellow, R.raw.color_dusty_yellow));
         colorList.add(new Word("chiwiiṭә","mustard yellow", R.drawable.color_mustard_yellow, R.raw.color_mustard_yellow));
 
-        WordAdapter adapter = new WordAdapter(this, colorList, R.color.category_colors);
+        WordAdapter adapter = new WordAdapter(getActivity(), colorList, R.color.category_colors);
         releaseMediaPlayer();
-        ListView lv = (ListView) findViewById(R.id.list);
+        ListView lv = (ListView) getActivity().findViewById(R.id.list);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class ColorsFragment extends Fragment {
                 Word word = colorList.get(position);
                 int result = audioManager.requestAudioFocus(mAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if(result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-                    mediaPlayer = MediaPlayer.create(ColorsActivity.this, word.getSoundId());
+                    mediaPlayer = MediaPlayer.create(getActivity(), word.getSoundId());
                     mediaPlayer.start();
                     mediaPlayer.setOnCompletionListener(mCompletionListener);
                 }
