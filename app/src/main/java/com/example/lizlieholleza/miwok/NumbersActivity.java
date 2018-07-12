@@ -1,5 +1,6 @@
 package com.example.lizlieholleza.miwok;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.provider.MediaStore;
@@ -22,7 +23,7 @@ public class NumbersActivity extends AppCompatActivity {
             releaseMediaPlayer();
         }
     };
-    private AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    private AudioManager.OnAudioFocusChangeListener mAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             if(focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
@@ -40,7 +41,7 @@ public class NumbersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
-
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         final ArrayList<Word> words = new ArrayList<Word>();
 
         words.add(new Word("lutti","one", R.drawable.number_one, R.raw.number_one));
@@ -60,9 +61,9 @@ public class NumbersActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Word word = words.get(position);
                 releaseMediaPlayer();
-                int result = audioManager.requestAudioFocus(audioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                Word word = words.get(position);
+                int result = audioManager.requestAudioFocus(mAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
                 if(result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mediaPlayer = MediaPlayer.create(NumbersActivity.this, word.getSoundId());
                     mediaPlayer.start();
@@ -77,6 +78,7 @@ public class NumbersActivity extends AppCompatActivity {
         if(mediaPlayer != null) {
             mediaPlayer.release();
             mediaPlayer = null;
+            audioManager.abandonAudioFocus(mAudioFocusChangeListener);
         }
     }
 

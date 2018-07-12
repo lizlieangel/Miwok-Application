@@ -16,4 +16,6 @@
     <!-- Height of each list item -->
     <dimen name="list_item_height">88dp</dimen>
     <dimen name="word_size">18sp</dimen>
+    <dimen name="arrow_size">24dp</dimen>
+    <dimen name="distance">16dp</dimen>
 </resources>
