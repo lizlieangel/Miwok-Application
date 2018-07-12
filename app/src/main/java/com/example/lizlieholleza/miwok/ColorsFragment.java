@@ -45,9 +45,15 @@ public class ColorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+      View rootview = inflater.inflate(R.layout.word_list, container, false);
+      return rootview;
     }
 
+    private void releaseMediaPlayer() {
+        if(mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+            audioManager.abandonAudioFocus(mAudioFocusChangeListener);
+        }
+    }
 }
