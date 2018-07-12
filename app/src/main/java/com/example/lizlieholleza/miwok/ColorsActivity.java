@@ -20,26 +20,8 @@ public class ColorsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_category);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new ColorsFragment()).commit();
 
-    }
-
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        releaseMediaPlayer();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
