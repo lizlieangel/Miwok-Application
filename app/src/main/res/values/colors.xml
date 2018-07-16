@@ -20,4 +20,6 @@
 
     <!-- Background color for the phrases category -->
     <color name="category_phrases">#16AFCA</color>
+
+    <color name="tab_background_color">#5f4339</color>
 </resources>

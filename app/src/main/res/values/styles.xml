@@ -15,4 +15,14 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
+
+    <style name="CategoryTab">
+        <item name="tabIndicatorColor">#ccb9bc</item>
+        <item name="tabSelectedTextColor">#cfd8dc</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">#e57373</item>
+    </style>
 </resources>
